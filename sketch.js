@@ -1,36 +1,30 @@
-// Initialize the Image Classifier method with MobileNet. A callback needs to be passed.
-let classifier;
-
-// A variable to hold the image we want to classify
+let bodypix;
+let segmentation;
 let img;
 
-const dog = "./images/dog.jpg";
-const bicycle = "./images/bicycle.jpg";
-const car = "./images/car.jpg";
-const flower = "./images/flower.jpg";
-
+const harriet = './images/harriet.jpg'
+const ada = './images/ada.jpg'
+const man = './images/man.jpg'
+const woman = './images/woman.jpg'
 function preload() {
-  classifier = ml5.imageClassifier("MobileNet");
-  img = loadImage(dog);
+    img = loadImage(woman);
+    bodypix = ml5.bodyPix()
 }
 
 function setup() {
-  createCanvas(400, 400);
-  classifier.classify(img, gotResult);
-  image(img, 0, 0, 400, (400 * img.height) / img.width);
+    createCanvas(480, 560);
+    bodypix.segment(img, gotResults)
 }
 
-// A function to run when we get any errors and the results
-function gotResult(error, results) {
-  // Display error in the console
-  if (error) {
-    console.error(error);
-  } else {
-    // The results are in an array ordered by confidence.
-    console.log(results);
-    for (var i = 0; i < 3; i++) {
-      createDiv(`Label: ${results[i].label}`);
-      createDiv(`Confidence: ${nf(results[i].confidence, 0, 2)}`);
+function gotResults(err, result) {
+    if (err) {
+        console.log(err)
+        return
     }
-  }
+
+    segmentation = result;
+
+    background(0);
+    image(segmentation.backgroundMask, 0, 0, width, height)
+
 }
