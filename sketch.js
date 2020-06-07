@@ -4,13 +4,13 @@ let poses = [];
 
 
 const dance = 'data/dance.jpg';
-
+const runner = 'data/runner.jpg';
 function setup() {
     createCanvas(640, 360);
 
     // create an image using the p5 dom library
     // call modelReady() when it is loaded
-    img = createImg(dance, imageReady);
+    img = createImg(runner, imageReady);
     // set the image size to the size of the canvas
     // img.size(width, height);
 
